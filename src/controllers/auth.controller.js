@@ -39,17 +39,26 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res) => {
-    const userFound = await User.findOne({email: req.body.email}).populate("role");
-    if (!userFound) return res.status(400).json({message: "Usuario no encontrado"})
 
-    const matchPassword = await User.comparar(req.body.password, userFound.password)
+    try {
+        const userFound = await User.findOne({ email: req.body.email }).populate("role");
+        if (!userFound) return res.status(400).json({ message: "Usuario no encontrado" })
 
-    if (!matchPassword) return res.status(401).json({token:null,message:"Contraseña invalida"})
+        const matchPassword = await User.comparar(req.body.password, userFound.password)
 
-    const token = jwt.sign({id:userFound._id},config.SECRET,{expiresIn:86400})
+        if (!matchPassword) return res.status(401).json({ token: null, message: "Contraseña invalida" })
 
-    console.log(userFound); 
-    res.json({token})
+        const token = jwt.sign({ id: userFound._id }, config.SECRET, { expiresIn: 86400 })
+
+        console.log(userFound);
+        res.json({ token })
+
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+        console.log(error)
+    }
+
+
 
 }
 

@@ -9,11 +9,3 @@ router.post("/",verify,propuestaController.createPropuesta)
 
 router.get("/",verify,propuestaController.getPropuesta)
 
-router.get("/:propuestaId",propuestaController.getPropuestaById)
-
-router.put("/:propuestaId",verify,propuestaController.updatePropuesta)
-
-router.delete("/:propuestaId",verify,propuestaController.deletePropuesta)
-
-
-module.exports = router

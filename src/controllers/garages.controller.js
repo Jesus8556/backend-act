@@ -3,14 +3,22 @@ const { Garage } = require("../models/garage")
 
 
 const createGarage = async (req, res) => {
-    console.log(req.body)
-    console.log(req.userId)
-    const { address, description, isAvailable, pricePerHour,user } = req.body
+    try {
+        console.log(req.body)
+        console.log(req.userId)
+        const { address, description, isAvailable, pricePerHour, user } = req.body
 
-    const newGarage = new Garage({ address, description, isAvailable, pricePerHour,user:req.userId })
-    const garageSave = await newGarage.save()
+        const newGarage = new Garage({ address, description, isAvailable, pricePerHour, user: req.userId })
+        const garageSave = await newGarage.save()
 
-    res.status(201).json(garageSave)
+        res.status(201).json(garageSave)
+
+    } catch (error) {
+
+        console.error('Error al crear garage:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+
 
 }
 

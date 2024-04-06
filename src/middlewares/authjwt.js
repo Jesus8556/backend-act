@@ -4,7 +4,7 @@ const User = require("../models/user")
 const { Rol } = require("../models/rol")
 const verifyToken = async (req, res, next) => {
     try {
-        const token = req.headers["x-access-token"]
+         const token = req.headers["x-access-token"]
         console.log(token)
 
         if (!token) return res.status(403).json({ message: "No hay token " })
